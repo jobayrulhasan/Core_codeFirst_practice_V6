@@ -1,0 +1,77 @@
+﻿@model List<Core_codeFirst_practice.Models.EmployeeViewModel>
+@{
+    ViewData["Title"] = "Employee Details";
+    var successMessage = TempData["successMessage"]?.ToString();
+    var errorMessage = TempData["errorMessage"]?.ToString();
+}
+<h4>@ViewData["Title"]</h4>
+<hr />
+@if (!string.IsNullOrWhiteSpace(successMessage))
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong>@successMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+    </div>
+   
+}
+else if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger">
+        <strong>Error!</strong>@errorMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+
+<form>
+    <button asp-controller="Employee" asp-action="Create" class="btn btn-success mb-2">Add New Records</button>
+    <table class="table table-bordered table-responsive table-hover overflow-scroll" style="height:100px">
+        <thead>
+            <tr class="table-active">
+                <th class="text-center">Serial No.</th>
+                <th class="text-center">ID</th>
+                <th class ="text-center">Name</th>
+                <th class="text-center">Date of Birth</th>
+                <th class="text-center">E-mail</th>
+                <th class="text-center">Salary</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                var sl = 1;
+                foreach (var employee in Model)
+                {
+                    <tr>
+                        <td class="text-center">@sl</td>
+                        <td class="text-center">@employee.id</td>
+                        <td class="text-center">@employee.FullName</td>
+                        <td class="text-center">@employee.DateofBirth.ToString("dd-MM-yyyy")</td>
+                        <td>@employee.Email</td>
+                        <td class="text-center">@employee.Salary</td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-sm">
+                                <a asp-controller="Employee" asp-action="Edit" asp-route-id="@employee.id" class="btn btn-primary">Edit</a>|
+                                <a asp-controller="Employee" asp-action="Delete" asp-route-id="@employee.id" class="btn btn-danger">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    sl++;
+                }
+                <tr>
+                    <td colspan="5" class="text-center"><b>Total</b></td>
+                    <td class="text-center" style="color:black; width: 30%;"><b>@Model.Sum(c => c.Salary)</b></td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" class="text-center">
+                        <div class="bg-light">No employee available at this moment!</div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

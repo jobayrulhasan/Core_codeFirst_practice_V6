@@ -1,0 +1,69 @@
+﻿@model Core_codeFirst_practice.Models.EmployeeViewModel;
+@{
+    ViewData["Title"] = "Delete Employee";
+    var errorMessage = TempData["errorMessage"]?.ToString();
+}
+<h3>@ViewData["Title"]</h3>
+<hr />
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger">
+        <strong>Error!</strong>@errorMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<form action="Delete" method="post" autocomplete="off">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group row mb-1">
+                    <label for="id" class="col-sm-3 col-form-label">Employee ID</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" asp-for="id" readonly>
+                    </div>
+                </div>
+                <div class="form-group row mb-1">
+                    <label for="FirstName" class="col-sm-3 col-form-label">First Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="First Name" asp-for="FirstName" readonly>
+                    </div>
+                </div>
+                <div class="form-group row mb-1">
+                    <label for="LastName" class="col-sm-3 col-form-label">Last Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="Last Name" asp-for="LastName" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group row mb-1">
+                    <label for="DateofBirth" class="col-sm-3 col-form-label">Date of Birth</label>
+                    <div class="col-sm-9">
+                        <input type="date" class="form-control" placeholder="Date of birth" asp-for="DateofBirth" readonly>
+                    </div>
+                </div>
+                <div class="form-group row mb-1">
+                    <label for="Email" class="col-sm-3 col-form-label">E-mail</label>
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control" placeholder="E-mail" asp-for="Email" readonly>
+                    </div>
+                </div>
+                <div class="form-group row mb-1">
+                    <label for="Email" class="col-sm-3 col-form-label">Salary</label>
+                    <div class="col-sm-9">
+                        <div class="input-group-text">
+                            <span class="input-group-text">৳</span>
+                            <input type="number" class="form-control" asp-for="Salary" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="text-center">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure to delete employee: @Model.FullName')">Delete</button>
+        </div>
+    </div>
+</form>
